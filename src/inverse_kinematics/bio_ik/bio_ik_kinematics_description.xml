@@ -1,0 +1,19 @@
+<library path="bio_ik_plugin">
+    <class 
+        name="bio_ik/BioIKKinematicsPlugin" 
+        type="bio_ik_kinematics_plugin::BioIKKinematicsPlugin" 
+        base_class_type="kinematics::KinematicsBase">
+    <description>
+      A implementation of kinematics as a plugin based on BioIK.
+    </description>
+  </class>
+
+  <class 
+      name="cached_ik_kinematics_plugin/CachedBioIKKinematicsPlugin" 
+      type="cached_ik_kinematics_plugin::CachedIKKinematicsPlugin<bio_ik_kinematics_plugin::BioIKKinematicsPlugin>" 
+      base_class_type="kinematics::KinematicsBase">
+      <description>
+        Kinematics plugin for persistently caching IK solutions computed with the BioIK kinematics plugin.
+      </description>
+  </class>
+</library>

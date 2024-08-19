@@ -1,0 +1,24 @@
+BasedOnStyle:  Google
+
+ColumnLimit: 100
+IndentWidth: 4
+
+BinPackArguments: false
+BinPackParameters: false
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+
+DerivePointerAlignment: false
+QualifierAlignment: Right
+ReferenceAlignment: Pointer
+SpaceAroundPointerQualifiers: Default
+PointerAlignment: Left
+
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Priority: 1
+    Regex: '^<pick_ik\/'
+  - Priority: 2
+    Regex: '^<(.+).hpp>$'
+  - Priority: 3
+    Regex: '^<(.+)>$'

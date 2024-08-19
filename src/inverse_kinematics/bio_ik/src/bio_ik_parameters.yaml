@@ -1,0 +1,125 @@
+bio_ik:
+  rotation_scale: {
+    type: double,
+    default_value: 0.5,
+    description: "The weight assigned to the rotational part of the pose.",
+    validation: {
+      gt_eq<>: [0.0],
+    }
+  }
+  position_only_ik: {
+    type: bool,
+    default_value: false,
+    description: "Flag to enable position only IK. (equivalent to setting 'rotation_scale' to zero)",
+  }
+  center_joints_weight: {
+    type: double,
+    default_value: 0.0,
+    description: "The weight to favour solutions towards the center of the joint limits range.",
+    validation: {
+      gt_eq<>: [0.0],
+    }
+  }
+  avoid_joint_limits_weight: {
+    type: double,
+    default_value: 0.0,
+    description: "The weight to favour solutions away from joint limits.",
+    validation: {
+      gt_eq<>: [0.0],
+    }
+  }
+  minimal_displacement_weight: {
+    type: double,
+    default_value: 0.0,
+    description: "The weight to favour solutions that minimize joint displacements.",
+    validation: {
+      gt_eq<>: [0.0],
+    }
+  }
+  profiler: {
+    type: bool,
+    default_value: false,
+    description: "A flag to enable or disable the profiler.",
+  }
+  # parameters for IKParallel
+  mode: {
+    type: string,
+    default_value: "bio2_memetic",
+    description: "The mode of the BioIK solver, determining the algorithm used for solving IK problems. Options include modes like 'bio1', 'bio2', 'bio2_memetic', etc.",
+    validation: {
+      one_of<>: [["bio1", "bio2", "bio2_memetic"]],
+    }
+  }
+  counter: {
+    type: bool,
+    default_value: false,
+    description: "A flag to enable or disable the internal counter for tracking the number of iterations or evaluations during the IK solving process.",
+  }
+  threads: {
+    type: int,
+    default_value: 0,
+    description: "The number of threads to use for parallel processing in the IK solver. A value of 0 uses all available cores.",
+    validation: {
+      gt_eq<>: [0],
+    }
+  }
+  random_seed: {
+    type: int,
+    default_value: -1,
+    description: "The seed for the random number generator used in the solver. A value of -1 means the seed is generated randomly.",
+    validation: {
+      gt_eq<>: [-1],
+    }
+  }
+  # parameters for Problem
+  dpos: {
+    type: double,
+    default_value: 1.0e+308,
+    description: "If the final solution position error is greater than this threshold, then the solver returns false.",
+    validation: {
+      gt_eq<>: [0.0],
+    }
+  }
+  drot: {
+    type: double,
+    default_value: 1.0e+308,
+    description: "If the final solution angle error is greater than this threshold, then the solver returns false.",
+    validation: {
+      gt_eq<>: [0.0],
+    }
+  }
+  dtwist: {
+    type: double,
+    default_value: 1.0e-5,
+    description: "If the final solution twist error is greater than this threshold, then the solver returns false.",
+    validation: {
+      gt_eq<>: [0.0],
+    }
+  }
+  # parameters for ik_evolution_1
+  no_wipeout: {
+    type: bool,
+    default_value: false,
+    description: "A flag indicating whether to prevent the complete replacement of the population in each generation of the evolutionary algorithm.",
+  }
+  population_size: {
+    type: int,
+    default_value: 8,
+    description: "The size of the population in the evolutionary algorithm. Larger populations may improve solution diversity but increase computation time.",
+    validation: {
+      gt_eq<>: [1],
+    }
+  }
+  elite_count: {
+    type: int,
+    default_value: 4,
+    description: "The number of top-performing individuals preserved across generations in the evolutionary algorithm.",
+    validation: {
+      gt_eq<>: [1],
+    }
+  }
+  linear_fitness: {
+    type: bool,
+    default_value: false,
+    description: "Determines whether the fitness function in the evolutionary algorithm should be linear or non-linear. Linear fitness may provide more gradual improvements.",
+  }

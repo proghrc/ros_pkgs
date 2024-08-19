@@ -1,0 +1,10 @@
+.vscode/
+log/
+install/
+build/
+
+src/**/moveit2_tutorials/
+src/**/moveit_task_constructor/
+src/**/ros2_robotiq_gripper/
+src/**/ros2_kortex/
+src/**/serial/

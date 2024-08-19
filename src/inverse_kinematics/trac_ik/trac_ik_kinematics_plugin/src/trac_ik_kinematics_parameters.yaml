@@ -1,0 +1,15 @@
+trac_ik:
+  solve_type: {
+    type: string,
+    default_value: "Speed",
+    description: "Solve type. Default is 'Speed'",
+    validation: {
+      one_of<>: [["Manipulation1", "Manipulation2", "Distance", "Speed"]]
+    }
+  }
+
+  position_only_ik: {
+    type: bool,
+    default_value: false,
+    description: "If true, sets the optimizers bounds on rot.x/y/z to inf.",
+  }

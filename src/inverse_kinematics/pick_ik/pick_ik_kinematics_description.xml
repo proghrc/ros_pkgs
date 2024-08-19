@@ -1,0 +1,19 @@
+<library path="pick_ik_plugin">
+    <class 
+        name="pick_ik/PickIkPlugin" 
+        type="pick_ik::PickIKPlugin" 
+        base_class_type="kinematics::KinematicsBase">
+        <description>
+            PickIk kinematics plugin.
+        </description>
+    </class>
+
+    <class 
+        name="cached_ik_kinematics_plugin/CachedPickIkPlugin" 
+        type="cached_ik_kinematics_plugin::CachedIKKinematicsPlugin<pick_ik::PickIKPlugin>" 
+        base_class_type="kinematics::KinematicsBase">
+        <description>
+            Kinematics plugin for persistently caching IK solutions computed with the PickIk kinematics plugin.
+        </description>
+    </class>
+</library>

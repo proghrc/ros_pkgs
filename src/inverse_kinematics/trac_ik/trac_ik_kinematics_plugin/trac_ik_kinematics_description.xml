@@ -1,0 +1,20 @@
+<library path="trac_ik_kinematics_plugin">
+  <class 
+    name="trac_ik/TracIKKinematicsPlugin" 
+    type="trac_ik_kinematics_plugin::TracIKKinematicsPlugin" 
+    base_class_type="kinematics::KinematicsBase">
+    <description>
+      A implementation of kinematics as a plugin based on TRAC-IK.
+    </description>
+  </class>
+
+  <class 
+      name="cached_ik_kinematics_plugin/CachedTracIKKinematicsPlugin" 
+      type="cached_ik_kinematics_plugin::CachedIKKinematicsPlugin<trac_ik_kinematics_plugin::TracIKKinematicsPlugin>" 
+      base_class_type="kinematics::KinematicsBase">
+      <description>
+          Kinematics plugin for persistently caching IK solutions computed with the TRAC-IK kinematics plugin.
+      </description>
+  </class>
+
+</library>

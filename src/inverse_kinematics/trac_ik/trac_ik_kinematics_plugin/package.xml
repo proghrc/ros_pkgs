@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>trac_ik_kinematics_plugin</name>
+  <version>1.6.7</version>
+  <description>MoveIt Kinematics plugin using TRAC-IK</description>
+  <maintainer email="as@progressiverobotics.ai">Antonis Sidiropoulos</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>generate_parameter_library</depend>
+  <depend>moveit_core</depend>
+  <depend>pluginlib</depend>
+  <depend>rclcpp</depend>
+  <depend>kdl_parser</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>tf2_kdl</depend>
+  <depend>trac_ik_lib</depend>
+  <depend>libnlopt-dev</depend>
+  <depend>moveit_kinematics</depend>
+  
+  <exec_depend>libnlopt0</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <moveit_core plugin="${prefix}/trac_ik_kinematics_description.xml"/>
+  </export>
+</package>
