@@ -678,7 +678,7 @@ struct BioIKKinematicsPlugin : kinematics::KinematicsBase {
 PLUGINLIB_EXPORT_CLASS(bio_ik_kinematics_plugin::BioIKKinematicsPlugin,
                        kinematics::KinematicsBase);
 
-#include <moveit_kinematics/moveit/cached_ik_kinematics_plugin/cached_ik_kinematics_plugin.h>
+#include <moveit/cached_ik_kinematics_plugin/cached_ik_kinematics_plugin.h>
 PLUGINLIB_EXPORT_CLASS(
   cached_ik_kinematics_plugin::CachedIKKinematicsPlugin<bio_ik_kinematics_plugin::BioIKKinematicsPlugin>, 
   kinematics::KinematicsBase);

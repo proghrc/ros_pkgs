@@ -434,5 +434,5 @@ class PickIKPlugin : public kinematics::KinematicsBase {
 
 PLUGINLIB_EXPORT_CLASS(pick_ik::PickIKPlugin, kinematics::KinematicsBase);
 
-#include <moveit_kinematics/moveit/cached_ik_kinematics_plugin/cached_ik_kinematics_plugin.h>
+#include <moveit/cached_ik_kinematics_plugin/cached_ik_kinematics_plugin.h>
 PLUGINLIB_EXPORT_CLASS(cached_ik_kinematics_plugin::CachedIKKinematicsPlugin<pick_ik::PickIKPlugin>, kinematics::KinematicsBase);

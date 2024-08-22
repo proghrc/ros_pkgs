@@ -3,8 +3,17 @@ log/
 install/
 build/
 
-src/**/moveit2_tutorials/
-src/**/moveit_task_constructor/
-src/**/ros2_robotiq_gripper/
-src/**/ros2_kortex/
-src/**/serial/
+# src/**/moveit2_tutorials/
+# src/**/moveit_task_constructor/
+# src/**/ros2_robotiq_gripper/
+# src/**/ros2_kortex/
+# src/**/serial/
+
+src/**
+
+!src/inverse_kinematics
+!src/moveit_msgs
+!src/moveit_resources
+!src/moveit_visual_tools
+!src/moveit2
+!src/rviz_visual_tools
