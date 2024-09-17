@@ -4,6 +4,7 @@
 #include <trac_ik/trac_ik.hpp>
 #include <limits>
 #include <fmt/format.h>
+#include <fmt/ranges.h>
 
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <tf2_kdl/tf2_kdl.hpp>
@@ -84,62 +85,95 @@ bool TracIKKinematicsPlugin::initialize(
     return false;
   }
 
-  num_joints_ = chain.getNrOfJoints();
+  for (unsigned int i = 0; i < chain.segments.size(); ++i)
+    link_names_.push_back(chain.segments[i].getName());
 
-  std::vector<KDL::Segment> chain_segs = chain.segments;
-
-  std::vector<double> l_bounds, u_bounds;
+  num_joints_ = joint_model_group_->getActiveJointModels().size();
+  joint_names_ = joint_model_group_->getActiveJointModelNames();
 
   joint_min.resize(num_joints_);
   joint_max.resize(num_joints_);
 
-  auto urdf_model = robot_model.getURDF();
-
-  uint joint_num = 0;
-  for (unsigned int i = 0; i < chain_segs.size(); ++i)
+  for (std::size_t i = 0; i < num_joints_; ++i)
   {
-    link_names_.push_back(chain_segs[i].getName());
-    // urdf::JointConstSharedPtr joint = robot_model.getJoint(chain_segs[i].getJoint().getName());
-    auto joint = urdf_model->getJoint(chain_segs[i].getJoint().getName());
-    if (joint->type != urdf::Joint::UNKNOWN && joint->type != urdf::Joint::FIXED)
+    const moveit::core::JointModel* joint_model = joint_model_group_->getActiveJointModels()[i];
+    if (joint_model->getType() == moveit::core::JointModel::REVOLUTE ||
+        joint_model->getType() == moveit::core::JointModel::PRISMATIC)
     {
-      joint_num++;
-      assert(joint_num <= num_joints_);
-      double lower, upper;
-      int hasLimits;
-      joint_names_.push_back(joint->name);
-      if (joint->type != urdf::Joint::CONTINUOUS)
-      {
-        if (joint->safety)
-        {
-          lower = std::max(joint->limits->lower, joint->safety->soft_lower_limit);
-          upper = std::min(joint->limits->upper, joint->safety->soft_upper_limit);
-        }
-        else
-        {
-          lower = joint->limits->lower;
-          upper = joint->limits->upper;
-        }
-        hasLimits = 1;
-      }
-      else
-      {
-        hasLimits = 0;
-      }
-      if (hasLimits)
-      {
-        joint_min(joint_num - 1) = lower;
-        joint_max(joint_num - 1) = upper;
-      }
-      else
-      {
-        joint_min(joint_num - 1) = std::numeric_limits<float>::lowest();
-        joint_max(joint_num - 1) = std::numeric_limits<float>::max();
-      }
+      const auto &bounds = joint_model->getVariableBounds()[0]; // assume 1DoF joint
+      joint_min(i) = bounds.min_position_;
+      joint_max(i) = bounds.max_position_;
       RCLCPP_INFO_STREAM(LOGGER, fmt::format("IK Using joint {}, limits [{}, {}]", 
-        chain_segs[i].getName().c_str(), joint_min(joint_num - 1), joint_max(joint_num - 1)));
+        joint_model->getName().c_str(), joint_min(i), joint_max(i)));
     }
   }
+
+  // num_joints_ = chain.getNrOfJoints();
+
+  // std::vector<KDL::Segment> chain_segs = chain.segments;
+
+  // joint_min.resize(num_joints_);
+  // joint_max.resize(num_joints_);
+
+  // auto urdf_model = robot_model.getURDF();
+
+  // uint joint_num = 0;
+  // for (unsigned int i = 0; i < chain_segs.size(); ++i)
+  // {
+  //   link_names_.push_back(chain_segs[i].getName());
+  //   // urdf::JointConstSharedPtr joint = robot_model.getJoint(chain_segs[i].getJoint().getName());
+  //   auto joint = urdf_model->getJoint(chain_segs[i].getJoint().getName());
+  //   if (joint->type != urdf::Joint::UNKNOWN && joint->type != urdf::Joint::FIXED)
+  //   {
+  //     joint_num++;
+  //     assert(joint_num <= num_joints_);
+  //     double lower, upper;
+  //     int hasLimits;
+  //     joint_names_.push_back(joint->name);
+  //     if (joint->type != urdf::Joint::CONTINUOUS)
+  //     {
+  //       if (joint->safety)
+  //       {
+  //         lower = std::max(joint->limits->lower, joint->safety->soft_lower_limit);
+  //         upper = std::min(joint->limits->upper, joint->safety->soft_upper_limit);
+  //       }
+  //       else
+  //       {
+  //         lower = joint->limits->lower;
+  //         upper = joint->limits->upper;
+  //       }
+  //       hasLimits = 1;
+  //     }
+  //     else
+  //     {
+  //       hasLimits = 0;
+  //     }
+  //     if (hasLimits)
+  //     {
+  //       joint_min(joint_num - 1) = lower;
+  //       joint_max(joint_num - 1) = upper;
+  //     }
+  //     else
+  //     {
+  //       joint_min(joint_num - 1) = std::numeric_limits<float>::lowest();
+  //       joint_max(joint_num - 1) = std::numeric_limits<float>::max();
+  //     }
+  //     RCLCPP_INFO_STREAM(LOGGER, fmt::format("IK Using joint {}, limits [{}, {}]", 
+  //       chain_segs[i].getName().c_str(), joint_min(joint_num - 1), joint_max(joint_num - 1)));
+  //   }
+  // }
+
+  // auto to_string = [](const std::vector<std::string> &vec) -> std::string
+  // {
+  //   std::ostringstream oss;
+  //   std::copy(vec.begin(), vec.end(), std::ostream_iterator<std::string>(oss, ", "));
+  //   return oss.str();
+  // };
+
+  // RCLCPP_INFO_STREAM(LOGGER, "\n\033[1;33;44m"
+  //   << "joints: [" << to_string(joint_names_) << "]\n"
+  //   << "links: [" << to_string(link_names_) << "]\n"
+  // );
 
   params_ = param_listener_->get_params();
 
