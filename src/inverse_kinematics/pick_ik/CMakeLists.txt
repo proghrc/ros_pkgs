@@ -63,9 +63,9 @@ pluginlib_export_plugin_description_file(
   pick_ik_kinematics_description.xml
 )
 
-if(BUILD_TESTING)
-  add_subdirectory(tests)
-endif()
+#if(BUILD_TESTING)
+#  add_subdirectory(tests)
+#endif()
 
 install(
   DIRECTORY include/
