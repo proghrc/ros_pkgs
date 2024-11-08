@@ -90,4 +90,30 @@ bool ChompParameters::setTrajectoryInitializationMethod(std::string method)
   }
   return false;
 }
+
+void ChompParameters::print(std::ostream &out)
+{
+  out << "*** CHOMP params ***\n"
+  << "planning_time_limit: " << planning_time_limit_ << "\n"
+  << "max_iterations: " << max_iterations_ << "\n"
+  << "max_iterations_after_collision_free: " << max_iterations_after_collision_free_ << "\n"
+  << "smoothness_cost_weight: " << smoothness_cost_weight_ << "\n"
+  << "obstacle_cost_weight: " << obstacle_cost_weight_ << "\n"
+  << "learning_rate: " << learning_rate_ << "\n"
+  << "smoothness_cost_velocity: " << smoothness_cost_velocity_ << "\n"    
+  << "smoothness_cost_acceleration: " << smoothness_cost_acceleration_ << "\n"
+  << "smoothness_cost_jerk: " << smoothness_cost_jerk_ << "\n"        
+  << "use_stochastic_descent: " << use_stochastic_descent_ << "\n"
+  << "ridge_factor: " << ridge_factor_ << "\n"
+  << "use_pseudo_inverse: " << use_pseudo_inverse_ << "\n"           
+  << "pseudo_inverse_ridge_factor: " << pseudo_inverse_ridge_factor_ << "\n"
+  << "joint_update_limit: " << joint_update_limit_ << "\n" 
+  << "min_clearance: " << min_clearance_ << "\n"      
+  << "collision_threshold: " << collision_threshold_ << "\n"
+  << "filter_mode: " << filter_mode_ << "\n"
+  << "trajectory_initialization_method: " << trajectory_initialization_method_ << "\n"
+  << "enable_failure_recovery: " << enable_failure_recovery_ << "\n"
+  << "max_recovery_attempts: " << max_recovery_attempts_;
+}
+
 }  // namespace chomp

@@ -500,6 +500,10 @@ class MoveItConfigsBuilder(ParameterBuilder):
             )
         }
         return self
+    
+    def move_group_capabilities(self):
+        self.__moveit_configs.move_group_capabilities = {"capabilities": ""}
+        return self
 
     def to_moveit_configs(self):
         """Get MoveIt configs from robot_name_moveit_config.
@@ -522,6 +526,8 @@ class MoveItConfigsBuilder(ParameterBuilder):
             self.sensors_3d()
         if not self.__moveit_configs.joint_limits:
             self.joint_limits()
+        if not self.__moveit_configs.move_group_capabilities:
+            self.move_group_capabilities()
         # TODO(JafarAbdi): We should have a default moveit_cpp.yaml as port of a moveit config package
         # if not self.__moveit_configs.moveit_cpp:
         #     self.moveit_cpp()

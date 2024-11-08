@@ -37,8 +37,8 @@ install(
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
   RUNTIME DESTINATION bin
-  INCLUDES
-  DESTINATION include/moveit_planners_ompl)
+  INCLUDES DESTINATION include/moveit_planners_ompl
+)
 ament_export_targets(moveit_planners_omplTargets HAS_LIBRARY_TARGET)
 ament_export_dependencies(moveit_core ompl)
 

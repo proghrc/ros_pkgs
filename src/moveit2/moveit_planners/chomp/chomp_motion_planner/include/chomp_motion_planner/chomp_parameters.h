@@ -36,6 +36,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 #pragma once
 
@@ -62,6 +63,8 @@ public:
    * @return true if a valid method (one of VALID_INITIALIZATION_METHODS) was specified
    */
   bool setTrajectoryInitializationMethod(std::string method);
+
+  void print(std::ostream &out=std::cout);
 
 public:
   double planning_time_limit_; /*!< maximum time the optimizer can take to find a solution before terminating */
